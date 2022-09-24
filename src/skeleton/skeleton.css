@@ -1,0 +1,48 @@
+.postSk {
+  width: 274px;
+  margin-right: 12px;
+  margin-bottom: 30px;
+
+  animation: skeleton 1s ease infinite alternate;
+}
+
+@keyframes skeleton {
+  to {
+    opacity: 0.5;
+  }
+}
+
+.postSkImg {
+  background-color: #313131;
+  width: 274px;
+  height: 153px;
+}
+
+.postSkInfo {
+  display: flex;
+  margin-top: 15px;
+}
+
+.postSkAvatar {
+  background-color: #313131;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.postSkDetail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.postSkText {
+  background-color: #313131;
+  width: 90%;
+  height: 20px;
+  margin-bottom: 5px;
+}
+.postSkText.sm {
+  width: 50%;
+}
