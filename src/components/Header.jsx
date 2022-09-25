@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useDispatch } from "react-redux";
 import { toggleNav } from "../features/navSlice";
+import SearchBox from "./SearchBox";
 const Header = () => {
   const dispatch = useDispatch();
   return (
@@ -25,13 +26,7 @@ const Header = () => {
             <div className="hidden text-2xl font-medium sm:block">Youtube</div>
           </Link>
         </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Search..."
-            className=" h-7 w-[200px] border border-[#494949] bg-[#181818] p-4 outline-none sm:ml-0 sm:w-[400px] sm:p-5 lg:w-[600px]"
-          />
-        </div>
+        <SearchBox />
         <div className="flex items-center gap-2 sm:gap-4">
           <AiOutlineVideoCamera className="hidden sm:block" />
           <AiFillBell className="hidden sm:block" />

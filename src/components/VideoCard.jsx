@@ -1,28 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import numeral from "numeral";
 import moment from "moment";
-const VideoCard = ({ video }) => {
-  // eslint-disable-next-line
-  const isLoading = false;
-  if (isLoading) {
-    return (
-      <div class="mx-auto w-full max-w-sm rounded-md border border-gray-800 p-4 shadow">
-        <div class="flex animate-pulse space-x-4">
-          <div class="h-10 w-10 rounded-full bg-slate-700"></div>
-          <div class="flex-1 space-y-6 py-1">
-            <div class="h-2 rounded bg-slate-700"></div>
-            <div class="space-y-3">
-              <div class="grid grid-cols-3 gap-4">
-                <div class="col-span-2 h-2 rounded bg-slate-700"></div>
-                <div class="col-span-1 h-2 rounded bg-slate-700"></div>
-              </div>
-              <div class="h-2 rounded bg-slate-700"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+import {
+  useGetChannelDetailsQuery,
+  useGetVideoByIdQuery,
+} from "../services/youtubeApi";
+import Skeleton from "../skeleton/Skeleton";
+const VideoCard = ({ video, channelId, id }) => {
+  const { data, isFetching, error } = useGetChannelDetailsQuery(channelId);
+  const { data: videoData, isFetching: isVideoFetching } =
+    useGetVideoByIdQuery(id);
+  if (isFetching) {
+    return <Skeleton type="feed" />;
   }
+  if (isVideoFetching) {
+    return <></>;
+  }
+  if (error) {
+    return <div>Error</div>;
+  }
+  const channelDetails = data?.items[0];
+  const videoDetails = videoData?.items[0];
+  const _viewCount = videoDetails?.statistics?.viewCount;
+  const __duration = videoDetails?.contentDetails?.duration;
+  const channelIcon = channelDetails?.snippet?.thumbnails?.default?.url;
+
   const truncateString = (str, num) => {
     if (str?.length > num) {
       return str.slice(0, num) + "...";
@@ -30,7 +32,13 @@ const VideoCard = ({ video }) => {
       return str;
     }
   };
-  const seconds = moment.duration(video?.contentDetails?.duration).asSeconds();
+  const seconds = moment
+    .duration(
+      video?.contentDetails?.duration
+        ? video?.contentDetails?.duration
+        : __duration
+    )
+    .asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
 
   return (
@@ -52,10 +60,11 @@ const VideoCard = ({ video }) => {
           </div>
         </figure>
       </div>
+
       <div className="flex items-center gap-3">
         <div>
           <img
-            src="https://images.unsplash.com/photo-1546587348-d12660c30c50?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bmF0dXJhbHxlbnwwfHwwfHw%3D&w=1000&q=80"
+            src={channelIcon}
             alt=""
             className="mb-2 h-8 w-8 rounded-[50%] object-cover"
           />
@@ -63,13 +72,16 @@ const VideoCard = ({ video }) => {
         <div>
           <div className="mb-2 text-sm">
             {" "}
-            {truncateString(video?.snippet?.title, 50)}
+            {truncateString(video?.snippet?.title, 35)}
           </div>
           <div className="text-xs">{video?.snippet?.channelTitle}</div>
           <div className="flex items-center gap-2 text-xs text-gray-400">
             <div>
               {" "}
-              {numeral(video?.statistics?.viewCount).format("0.a")} views
+              {numeral(video?.statistics?.viewCount || _viewCount).format(
+                "0.a"
+              )}{" "}
+              views
             </div>{" "}
             • <div> {moment(video?.snippet?.publishedAt).fromNow()}</div>
           </div>

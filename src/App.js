@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { selectAllNav } from "./features/navSlice";
 import Categories from "./components/Categories";
 import VideoDetails from "./pages/VideoDetails";
+import Search from "./pages/Search";
 function App() {
   const { isOpen } = useSelector(selectAllNav);
   return (
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/videos" element={<Videos />} />
+            <Route path="/search/:query" element={<Search />} />
             <Route path="/video-detail/:id" element={<VideoDetails />} />
           </Routes>
         </div>

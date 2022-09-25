@@ -25,11 +25,10 @@ const Categories = () => {
   return (
     <div className="categoriesBar sticky top-14 z-50 flex h-12 items-center overflow-x-scroll border-b border-[#494949] bg-black sm:h-fit">
       {keywords.map((value, i) => (
-        <Link to="/">
+        <Link to="/" key={i}>
           <span
             onClick={() => dispatch(selectCategory(value))}
             className="border-[#494949]"
-            key={i}
           >
             {value}
           </span>

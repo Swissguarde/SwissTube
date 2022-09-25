@@ -10,20 +10,18 @@ import {
 } from "react-icons/ai";
 import { MdMoreHoriz } from "react-icons/md";
 import { useState } from "react";
-const MetaData = ({ snippet, statistics, channelId }) => {
+const MetaData = ({ videoDetails }) => {
   const [showDesc, setShowDesc] = useState(false);
-  const { channelTitle, description, title, publishedAt } = snippet;
-  const { viewCount, likeCount } = statistics;
-
+  const { channelTitle, description, title, publishedAt } =
+    videoDetails?.snippet;
+  const { viewCount, likeCount } = videoDetails?.statistics;
+  const channelId = videoDetails?.snippet?.channelId;
   const { data, isFetching } = useGetMoreChannelDetailsQuery(channelId);
-  // {
-  //   isFetching ? console.log("fetching...") : console.log(data.items[0]);
-  // }
+
   if (isFetching) {
     return "Loading...";
   }
   const channelData = data.items[0];
-  console.log(channelData);
 
   const menus = [
     { label: numeral(likeCount).format("0.a"), icon: AiOutlineLike },
@@ -59,7 +57,7 @@ const MetaData = ({ snippet, statistics, channelId }) => {
       <div className="mt-2 flex items-center justify-between border-b border-[#494949] pb-2">
         <div className="flex items-center gap-4">
           <img
-            src={snippet?.thumbnails?.default?.url}
+            src={channelData?.snippet?.thumbnails?.default?.url}
             alt=""
             className="mb-2 h-10 w-10 rounded-[50%] object-cover"
           />
