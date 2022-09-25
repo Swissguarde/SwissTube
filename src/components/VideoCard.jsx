@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import numeral from "numeral";
 import moment from "moment";
 import {
@@ -6,7 +6,8 @@ import {
   useGetVideoByIdQuery,
 } from "../services/youtubeApi";
 import Skeleton from "../skeleton/Skeleton";
-const VideoCard = ({ video, channelId, id }) => {
+import Channel from "./Channel";
+const VideoCard = ({ video, channelId, id, kind }) => {
   const { data, isFetching, error } = useGetChannelDetailsQuery(channelId);
   const { data: videoData, isFetching: isVideoFetching } =
     useGetVideoByIdQuery(id);
@@ -40,53 +41,58 @@ const VideoCard = ({ video, channelId, id }) => {
     )
     .asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
-
+  const isChannel = kind === "youtube#channel";
   return (
     <Link
-      to={`/video-detail/${
-        typeof video?.id === "string" ? video?.id : video?.id.videoId
-      }`}
+      to={`${isChannel ? `/channel/${channelId}` : `/video-detail/${id}`}`}
       className="h-full rounded bg-[#13131370] p-4 shadow-lg"
     >
-      <div>
-        <figure className="relative">
-          <img
-            src={video?.snippet?.thumbnails?.medium?.url}
-            alt={video?.snippet?.title}
-            className="mb-2 h-full w-full object-cover"
-          />
-          <div className="absolute bottom-1 right-1 bg-slate-600 p-1 text-xs">
-            {_duration}
-          </div>
-        </figure>
-      </div>
+      {!isChannel && (
+        <div>
+          <figure className="relative">
+            <img
+              src={video?.snippet?.thumbnails?.medium?.url}
+              alt={video?.snippet?.title}
+              className="mb-2 h-full w-full object-cover"
+            />
+            <div className="absolute bottom-1 right-1 bg-slate-600 p-1 text-xs">
+              {_duration}
+            </div>
+          </figure>
+        </div>
+      )}
 
-      <div className="flex items-center gap-3">
-        <div>
-          <img
-            src={channelIcon}
-            alt=""
-            className="mb-2 h-8 w-8 rounded-[50%] object-cover"
-          />
-        </div>
-        <div>
-          <div className="mb-2 text-sm">
-            {" "}
-            {truncateString(video?.snippet?.title, 35)}
+      {isChannel ? (
+        <Channel data={channelDetails} />
+      ) : (
+        <div className="flex items-center gap-3">
+          <div>
+            <img
+              src={channelIcon}
+              alt=""
+              className="mb-2 h-8 w-8 rounded-[50%] object-cover"
+            />
           </div>
-          <div className="text-xs">{video?.snippet?.channelTitle}</div>
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <div>
+
+          <div>
+            <div className="mb-2 text-sm">
               {" "}
-              {numeral(video?.statistics?.viewCount || _viewCount).format(
-                "0.a"
-              )}{" "}
-              views
-            </div>{" "}
-            • <div> {moment(video?.snippet?.publishedAt).fromNow()}</div>
+              {truncateString(video?.snippet?.title, 35)}
+            </div>
+            <div className="text-xs">{video?.snippet?.channelTitle}</div>
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <div>
+                {" "}
+                {numeral(video?.statistics?.viewCount || _viewCount).format(
+                  "0.a"
+                )}{" "}
+                views
+              </div>{" "}
+              • <div> {moment(video?.snippet?.publishedAt).fromNow()}</div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </Link>
   );
 };

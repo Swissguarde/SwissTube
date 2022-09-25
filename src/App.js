@@ -8,6 +8,7 @@ import { selectAllNav } from "./features/navSlice";
 import Categories from "./components/Categories";
 import VideoDetails from "./pages/VideoDetails";
 import Search from "./pages/Search";
+import ChannelDetails from "./pages/ChannelDetails";
 function App() {
   const { isOpen } = useSelector(selectAllNav);
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/videos" element={<Videos />} />
             <Route path="/search/:query" element={<Search />} />
+            <Route path="/channel/:channelId" element={<ChannelDetails />} />
             <Route path="/video-detail/:id" element={<VideoDetails />} />
           </Routes>
         </div>

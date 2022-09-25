@@ -39,6 +39,13 @@ export const youtubeApi = createApi({
       query: (id) =>
         `/channels?part=snippet,contentDetails,statistics&id=${id}&key=${key}`,
     }),
+    getUploadPlaylist: builder.query({
+      query: (id) =>
+        `/playlistItems?part=contentDetails,snippet&playlistId=${id}&maxResults=30&key=${key}`,
+    }),
+    getChannelVideos: builder.query({
+      query: (id) => `/channels?part=contentDetails&id=${id}&key=${key}`,
+    }),
   }),
 });
 
@@ -50,4 +57,6 @@ export const {
   useGetVideoCommentsQuery,
   useGetRelatedVideosQuery,
   useGetMoreChannelDetailsQuery,
+  useGetUploadPlaylistQuery,
+  useGetChannelVideosQuery,
 } = youtubeApi;

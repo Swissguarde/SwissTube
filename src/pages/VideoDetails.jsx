@@ -45,7 +45,7 @@ const VideoDetails = () => {
   );
 
   return (
-    <div className="z-10 grid grid-cols-12 gap-4 bg-[#181818]">
+    <div className="z-10 grid grid-cols-12 gap-4 bg-[#181818] pb-14">
       <div className="col-span-12 md:col-span-8">
         <div className="sticky top-20 mb-4 h-[35vh] p-0 sm:static sm:top-0 sm:h-[60vh] sm:p-4">
           <iframe
