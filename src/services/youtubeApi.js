@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const key = process.env.REACT_APP_API_KEY;
-
+// const pageToken = "CBQQAA";
 export const youtubeApi = createApi({
   reducerPath: "youtubeApi",
   baseQuery: fetchBaseQuery({
@@ -21,7 +21,7 @@ export const youtubeApi = createApi({
           return `/search?part=snippet&maxResults=20&q=${keyword}&type=video,channel&key=${key}`;
         }
         // Popular Videos
-        return `/videos?part=snippet,contentDetails,statistics&chart=mostPopular&regionCode=US&maxResults=20&key=${key}`;
+        return `/videos?part=snippet,contentDetails,statistics&chart=mostPopular&regionCode=US&maxResults=50&key=${key}`;
       },
     }),
     getVideoById: builder.query({

@@ -26,10 +26,14 @@ const MetaData = ({ videoDetails }) => {
   const menus = [
     { label: numeral(likeCount).format("0.a"), icon: AiOutlineLike },
     { label: "Dislike", icon: AiOutlineDislike },
-    { label: "Share", icon: AiOutlineShareAlt },
+    { label: "Share", icon: AiOutlineShareAlt, click: true },
     { label: "Save", icon: AiOutlineSave },
     { label: "More", icon: MdMoreHoriz },
   ];
+  const handleClick = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("link copied!");
+  };
 
   return (
     <div className="p-4">
@@ -42,7 +46,7 @@ const MetaData = ({ videoDetails }) => {
         {menus.map((menu, i) => (
           <div key={i} className="flex flex-col items-center">
             <div>{React.createElement(menu.icon, { size: "20" })}</div>
-            <div>{menu.label}</div>
+            <div onClick={menu?.click && handleClick}>{menu.label}</div>
           </div>
         ))}
       </div>
@@ -74,18 +78,6 @@ const MetaData = ({ videoDetails }) => {
             SUBSCRIBE
           </button>
         </div>
-      </div>
-      <div className="flex items-center">
-        <img
-          src="https://images.unsplash.com/photo-1546587348-d12660c30c50?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bmF0dXJhbHxlbnwwfHwwfHw%3D&w=1000&q=80"
-          alt=""
-          className="mb-2 h-6 w-6 rounded-[50%] object-cover"
-        />
-        <input
-          type="text"
-          placeholder="Add a comment..."
-          className="h-7 w-full border-b border-[#494949] bg-[#181818] p-6 outline-none sm:ml-0 sm:p-5 lg:w-[600px]"
-        />
       </div>
     </div>
   );

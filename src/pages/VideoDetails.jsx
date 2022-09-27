@@ -3,7 +3,7 @@ import {
   useGetRelatedVideosQuery,
 } from "../services/youtubeApi";
 import { useParams } from "react-router-dom";
-
+import { nanoid } from "@reduxjs/toolkit";
 import Comments from "../components/Comments";
 import VideoCard from "../components/VideoCard";
 import Skeleton from "../skeleton/Skeleton";
@@ -30,8 +30,8 @@ const VideoDetails = () => {
         <div className="col-span-12 p-4 md:col-span-4">
           <div className="mb-4 h-5 w-[80%] bg-[#313131]"></div>
           <div className="grid w-full grid-cols-1 items-center justify-center gap-5 overflow-hidden">
-            {[...Array(13)].map((i) => (
-              <Skeleton type="feed" key={i} />
+            {[...Array(13)].map(() => (
+              <Skeleton type="feed" key={nanoid()} />
             ))}
           </div>
         </div>

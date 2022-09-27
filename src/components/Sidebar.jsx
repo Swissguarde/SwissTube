@@ -63,9 +63,9 @@ const Sidebar = () => {
           <MdOutlineLibraryBooks size={23} />
           <span className="text-xs">Subscriptions</span>
         </Link>
-        <Link to="/" className="flex flex-col items-center">
+        <Link to="/profile" className="flex flex-col items-center">
           <MdOutlineLibraryBooks size={23} />
-          <span className="text-xs">Library</span>
+          <span className="text-xs">Profile</span>
         </Link>
       </div>
     </>

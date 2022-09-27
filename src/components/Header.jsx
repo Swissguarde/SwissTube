@@ -3,13 +3,16 @@ import {
   AiOutlineBars,
   AiOutlineVideoCamera,
 } from "react-icons/ai";
-import { BsPersonSquare } from "react-icons/bs";
+
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleNav } from "../features/navSlice";
 import SearchBox from "./SearchBox";
+
 const Header = () => {
+  const { image } = useSelector((state) => state.profile);
+
   const dispatch = useDispatch();
   return (
     <>
@@ -29,8 +32,18 @@ const Header = () => {
         <SearchBox />
         <div className="flex items-center gap-2 sm:gap-4">
           <AiOutlineVideoCamera className="hidden sm:block" />
-          <AiFillBell className="hidden sm:block" />
-          <BsPersonSquare className="cursor-pointer" />
+          <AiFillBell />
+          <Link to="/profile" className="hidden sm:block">
+            {image !== "" ? (
+              <img
+                src={image}
+                alt="pfp"
+                className="h-8 w-8 rounded-[50%] object-cover"
+              />
+            ) : (
+              "Profile"
+            )}
+          </Link>
         </div>
       </div>
     </>
