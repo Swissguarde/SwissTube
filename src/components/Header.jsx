@@ -26,7 +26,9 @@ const Header = () => {
           </button>
           <Link to="/" className="flex items-center">
             <img src={logo} alt="logo" className="mr-4 object-cover" />
-            <div className="hidden text-2xl font-medium sm:block">Youtube</div>
+            <div className="hidden text-2xl font-medium sm:block">
+              SwissTube
+            </div>
           </Link>
         </div>
         <SearchBox />

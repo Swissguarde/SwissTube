@@ -1,5 +1,6 @@
 import VideoCard from "../components/VideoCard";
 import { useSelector } from "react-redux";
+import { nanoid } from "nanoid";
 import { useGetSearchQuery } from "../services/youtubeApi";
 import Skeleton from "../skeleton/Skeleton";
 const Search = () => {
@@ -9,8 +10,8 @@ const Search = () => {
   if (isFetching) {
     return (
       <div className="grid w-full grid-cols-1 items-center justify-center gap-5 overflow-hidden p-4 md:grid-cols-3 lg:grid-cols-4">
-        {[...Array(20)].map((i) => (
-          <Skeleton type="feed" key={i} />
+        {[...Array(20)].map(() => (
+          <Skeleton type="feed" key={nanoid()} />
         ))}
       </div>
     );
@@ -22,7 +23,7 @@ const Search = () => {
         <VideoCard
           kind={video?.id.kind}
           video={video}
-          key={typeof video?.id === "string" ? video?.id : video?.id.videoId}
+          key={video?.id.videoId ? video?.id.videoId : video?.id.channelId}
           id={typeof video?.id === "string" ? video?.id : video?.id.videoId}
           channelId={video?.snippet?.channelId}
         />
