@@ -1,6 +1,6 @@
 # SwissTube
 
-SwissTube is a video sharing web app where users can watch, share, and search for videos. The video service can be accessed on PCs, laptops, tablets and via mobile phones. This project was built using the Youtube Data V3 API
+SwissTube is a video sharing web app where users can watch, share, and search for videos. The video service can be accessed on PCs, laptops, tablets and via mobile phones. This project was built using the Youtube Data V3 API, React 18, Firebase. All dependencies can be found in the package.json file
 
 ## Available Scripts
 
